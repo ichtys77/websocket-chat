@@ -11,12 +11,16 @@ loginForm.addEventListener('submit', (event) => {
   login(event);
 });
 
-const login = event => {
-  // console.log('click');
+addMessageForm.addEventListener('submit', (event) => {
+  sendMessage(event);
+});
+
+const login = () => {
   event.preventDefault();
+  // console.log('click');
 
   if (userNameInput.value == '') {
-    alert('Type Your name, please')
+    alert('Type your name, please')
   }
   else {
     userName = userNameInput.value;
@@ -24,4 +28,31 @@ const login = event => {
     loginForm.classList.remove('show');
     messagesSection.classList.add('show');
   }
+};
+
+const sendMessage = () => {
+  event.preventDefault();
+  // console.log('click');
+
+  if (messageContentInput.value == '') {
+    alert('Type your message, please')
+  }
+  else {
+    addMessage(userName, messageContentInput.value);
+    messageContentInput.value = '';
+  }
+};
+
+const addMessage = (author, content) => {
+  const message = document.createElement('li');
+  message.classList.add('message', 'message--received');
+  if (author == userName) message.classList.add('message--self');
+  message.innerHTML = `
+    <h3 class="message__author">${userName === author ? 'You' : author }</h3>
+    <div class="message__content">
+      ${content}
+    </div>
+  `;
+  messagesList.appendChild(message);
+
 }
